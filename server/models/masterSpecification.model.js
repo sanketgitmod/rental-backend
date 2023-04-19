@@ -8,6 +8,10 @@ const masterSpecificationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "subCategories",
   },
+  booked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const masterSpecification = mongoose.model(

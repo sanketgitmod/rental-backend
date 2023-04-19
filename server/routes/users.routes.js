@@ -1,4 +1,5 @@
 const { User } = require("../models/user.model");
+const { masterSpecification } = require("../models/masterSpecification.model");
 const validate = require("../middleware/validate");
 const { validateUser } = require("../middleware/userValidate");
 const express = require("express");
@@ -34,6 +35,11 @@ router.post("/", validate(validateUser), async (req, res) => {
       startDate,
       endDate,
     });
+
+    await masterSpecification.updateOne(
+      { masterSpecificationName: specificModel },
+      { booked: true }
+    );
 
     await user.save();
 

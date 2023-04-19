@@ -5,7 +5,9 @@ const router = express.Router();
 
 router.get("/all", async (req, res, next) => {
   try {
-    const masterSpecifications = await masterSpecification.find();
+    const masterSpecifications = await masterSpecification.find({
+      booked: false,
+    });
     res.send(masterSpecifications);
   } catch (ex) {
     next(ex);
@@ -15,7 +17,12 @@ router.get("/all", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const allSpecification = await masterSpecification.aggregate([
-      { $match: { subCategoryId: mongoose.Types.ObjectId(req.params.id) } },
+      {
+        $match: {
+          subCategoryId: mongoose.Types.ObjectId(req.params.id),
+          booked: false,
+        },
+      },
       {
         $project: {
           _id: 0,
